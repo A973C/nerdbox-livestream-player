@@ -1,0 +1,29 @@
+{
+  "name": "nerdbox-player",
+  "authors": [
+    "Xorus <jdpepi@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "proprietary",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "font-awesome": "fontawesome#^4.5.0",
+    "Materialize": "materialize#^0.97.5",
+    "websocket-connect": "git://github.com/xorus/websocket-connect#^1.0.0",
+    "paper": "^0.9.25"
+  },
+  "resolutions": {
+    "jquery": "2.2.1"
+  }
+}

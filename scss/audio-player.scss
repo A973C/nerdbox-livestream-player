@@ -1,0 +1,14 @@
+.player-play-btn-wrapper {
+  position: relative;
+  display: inline-block;
+
+  .preloader-wrapper {
+    position: absolute;
+    left: -4px;
+    top: -4px;
+
+    .spinner-layer {
+      border-color: white;
+    }
+  }
+}

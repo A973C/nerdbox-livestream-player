@@ -1,0 +1,13 @@
+@import "../bower_components/Materialize/sass/components/color";
+$secondary-color: color("blue", "darken-1");
+$link-color: color("light-blue", "lighten-4");
+
+@import "../bower_components/Materialize/sass/materialize";
+
+.modal {
+  background: #1E1E1E;
+
+  .modal-footer {
+    background-color: #1E1E1E;
+  }
+}
