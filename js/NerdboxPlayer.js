@@ -113,6 +113,8 @@ NerdboxPlayer.prototype.build = function () {
     this.el.$document.append(this.el.$bottomBar);
     this.el.$container.append(this.el.$nowPlaying);
 
+    var enableVisu = !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+
     $('.player-container').livestreamPlayer({
         stream: this.appConf.stream,
         visualisationDestination: nerdboxPlayer.el.$megaCover,
@@ -125,8 +127,10 @@ NerdboxPlayer.prototype.build = function () {
                 ),
                 $('<div class="volume-container">')
             );
-        }
+        },
+        visualisationEnabled: enableVisu
     });
+    $('.player-container').data('livestream-player').enableVisualisation(enableVisu);
 };
 
 /** SOCKET RELATED METHODS **/
@@ -137,7 +141,6 @@ NerdboxPlayer.prototype.onSocketMessage = function (message) {
     }
 
     var data = $.parseJSON(message.data);
-    //console.debug(data);
 
     if (data == undefined || data.type == undefined) {
         return;

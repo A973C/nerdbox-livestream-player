@@ -39,6 +39,7 @@
         this.audio.startVolume = this.audio.defaultVolume;
 
         this.visualisation = {
+            paper: undefined,
             path: undefined,
             pathStyle: (typeof options.pathStyle !== 'undefined') ? options.pathStyle : {
                 //strokeColor: 'white',
@@ -52,7 +53,8 @@
                 //}
                 fillColor: 'rgba(255, 255, 255, 0.8)'
             },
-            scaleX: (typeof options.scaleX !== 'undefined') ? options.scaleX : 1.35
+            scaleX: (typeof options.scaleX !== 'undefined') ? options.scaleX : 1.35,
+            enabled: options.visualisationEnabled
         };
 
         var uidProperty = 'livestreamPlayer-uid';
@@ -90,17 +92,6 @@
         }
     };
 
-    //LivestreamPlayer.prototype.lock = function (lock) {
-    //    lock = (typeof lock === 'undefined') ? true : lock;
-    //    this.locked = lock;
-    //
-    //    if (lock) {
-    //        this.el.$playButton.addClass('lock');
-    //    } else {
-    //        this.el.$playButton.removeClass('lock');
-    //    }
-    //};
-
     LivestreamPlayer.prototype.builders = {
         /**
          * Builds the loading circle spinner
@@ -130,11 +121,13 @@
                 $('<div class="right-btn-container">')
             );
         },
-        settingsButton: function () {
+        settingsButton: function (instance) {
             //<a class='dropdown-button' href='#' data-activates='dropdown1' data-hover="true"><i class="material-icons">volume_up</i></a>
             return $('<a href="#">').append(
                 $('<i class="material-icons">').text('settings')
-            );
+            ).click(function () {
+                instance.enableVisualisation(!instance.visualisation.enabled);
+            });
         },
         volumeButton: function (instance) {
             //<a class='dropdown-button' href='#' data-activates='dropdown1' data-hover="true"><i class="material-icons">volume_up</i></a>
@@ -177,7 +170,7 @@
         // init elements
         this.el.$buttonContainer = this.builders.buttonContainer();
         this.el.$playButton = this.builders.playButton();
-        this.el.$settingsButton = this.builders.settingsButton();
+        this.el.$settingsButton = this.builders.settingsButton(this);
         this.el.$volumeButton = this.builders.volumeButton(this);
         this.el.$volumeRange = $('<div>');
 
@@ -245,6 +238,7 @@
         var instance = this;
         paper = new paper.PaperScope();
         paper.setup(this.el.$canvas.get(0));
+        this.visualisation.paper = paper;
 
         this.visualisation.path = new paper.Path(this.visualisation.pathStyle);
 
@@ -258,8 +252,11 @@
         this.visualisation.path.add(new paper.Point(paper.view.size.width, paper.view.size.height + strokeW));
         this.visualisation.path.add(new paper.Point(0, paper.view.size.height + strokeW));
         paper.view.draw();
+
         paper.view.onFrame = function () {
-            instance.updateAudioGraph();
+            if (instance.visualisation.enabled) {
+                instance.updateAudioGraph();
+            }
         };
         paper.view.onResize = function () {
             instance.viewResized();
@@ -398,6 +395,22 @@
 
     /* PUBLIC API METHODS */
     /**
+     * Enables or disables the audio visualisation
+     *
+     * @param enabled
+     */
+    LivestreamPlayer.prototype.enableVisualisation = function (enabled) {
+        if (enabled) {
+            this.el.$canvas.show();
+            this.visualisation.paper.view.play();
+        } else {
+            this.el.$canvas.hide();
+            this.visualisation.paper.view.pause();
+        }
+        this.visualisation.enabled = enabled;
+    };
+
+    /**
      * Changes the audio volume
      *
      * @param volume [0..1]
@@ -500,7 +513,11 @@
              * Callback used to build the buttons container.
              * Expects a jquery object
              */
-            buttonContainerBuilder: undefined
+            buttonContainerBuilder: undefined,
+            /**
+             * Enables or diables audio visualisation by default
+             */
+            visualisationEnabled: true
         };
 
         options = $.extend({}, defaults, options);
