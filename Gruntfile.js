@@ -52,4 +52,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.registerTask('default', ['sass', 'autoprefixer', 'watch']);
+    grunt.registerTask('compile', ['sass', 'autoprefixer']);
 };
