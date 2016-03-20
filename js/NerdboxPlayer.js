@@ -90,7 +90,7 @@ NerdboxPlayer.prototype.build = function () {
             $('<p class="artist">'),
             $('<p class="album">'),
             $('<div class="requestIndicator">'),
-            $('<a class="btn waves-effect url">')
+            $('<a class="url">')
                 .html('<i class="material-icons">open_in_new</i> Site de l\'auteur')
                 .attr('target', '_blank')
         )

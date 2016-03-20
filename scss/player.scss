@@ -252,13 +252,10 @@ a {
     }
 
     .url {
-      margin-top: 10px;
+      margin-top: 5px;
       font-size: 80%;
-      vertical-align: middle;
-      padding: 0 1rem;
-      height: 30px;
-      line-height: 30px;
       display: none;
+      opacity: 0.6;
 
       &.shown {
         display: inline-block;
