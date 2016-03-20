@@ -89,9 +89,10 @@ NerdboxPlayer.prototype.build = function () {
             $('<h3 class="title">'),
             $('<p class="artist">'),
             $('<p class="album">'),
-            $('<div class="requestIndicator">')//,
-            //$('<a href="#">')
-            //    .html('<i class="fa fa-link"></i> Site de l\'auteur')
+            $('<div class="requestIndicator">'),
+            $('<a class="btn waves-effect url">')
+                .html('<i class="material-icons">open_in_new</i> Site de l\'auteur')
+                .attr('target', '_blank')
         )
     );
 
@@ -225,6 +226,11 @@ NerdboxPlayer.prototype.displayCurrentSong = function () {
         $elm.find('.requestIndicator').addClass('shown');
     } else {
         $elm.find('.requestIndicator').removeClass('shown');
+    }
+    if (typeof current.song.url !== "undefined") {
+        $elm.find('.url').attr('href', current.song.url).addClass('shown');
+    } else {
+        $elm.find('.url').attr('href', '#').removeClass('shown');
     }
 
     // update cover image
