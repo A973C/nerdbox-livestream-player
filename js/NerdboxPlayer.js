@@ -59,6 +59,9 @@ function NerdboxPlayer(appConf) {
         $megaCover: undefined,
         $bottomBar: undefined
     };
+
+    this.isMobile = (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    this.liveStreamPlayer = undefined;
 }
 
 NerdboxPlayer.prototype.start = function () {
@@ -131,7 +134,9 @@ NerdboxPlayer.prototype.build = function () {
         },
         visualisationEnabled: enableVisu
     });
-    $('.player-container').data('livestream-player').enableVisualisation(enableVisu);
+    this.liveStreamPlayer = $('.player-container').data('livestream-player');
+    this.liveStreamPlayer.enableVisualisation(enableVisu);
+    this.onPlayerReady();
 };
 
 /** SOCKET RELATED METHODS **/
@@ -297,5 +302,14 @@ NerdboxPlayer.prototype.imgPreload = function (imgs, callback) {
         images[i].onerror = inc;
         images[i].onload = inc;
         images[i].src = imgs[i];
+    }
+};
+
+/**
+ * Called when everything is initialised and ready to play
+ */
+NerdboxPlayer.prototype.onPlayerReady = function () {
+    if (!this.isMobile && this.appConf.autoPlay) {
+        this.liveStreamPlayer.play();
     }
 };
