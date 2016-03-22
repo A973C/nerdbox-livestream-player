@@ -232,7 +232,7 @@ NerdboxPlayer.prototype.displayCurrentSong = function () {
     } else {
         $elm.find('.requestIndicator').removeClass('shown');
     }
-    if (typeof current.song.url !== "undefined") {
+    if (typeof current.song.url !== "undefined" && current.song.url != null) {
         $elm.find('.url').attr('href', current.song.url).addClass('shown');
     } else {
         $elm.find('.url').attr('href', '#').removeClass('shown');
