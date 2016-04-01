@@ -1,5 +1,7 @@
 # Nerdbox livestream player
 
+http://nerdbox.fr/player
+
 Live audio player with simple music visualisation for Nerdbox.fr.
 
 `js/NerdboxPlayer.js` contains all the Nerdbox-specific code (metadata display etc..)
