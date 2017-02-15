@@ -1,6 +1,6 @@
 # Nerdbox livestream player
 
-http://nerdbox.fr/player
+http://fil-animal.eu/player
 
 Live audio player with simple music visualisation for Nerdbox.fr.
 
